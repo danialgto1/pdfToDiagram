@@ -1,0 +1,205 @@
+in this text extarct section. then find requiremnets of that section like bellow
+each requirement must be a 'shall' statement
+take statement number as id
+every section must has "section" and "spec"
+every spec must has "name" and "requirement"
+every requirement must has "id" , "shall" , and "attributes"
+If any section has two shall statements, divide them and set two different IDs for two different statement objects.
+if it has child write Id of that
+For "type" attribute you should determine type of this requirements (e.g. is it a safety requirement, is it a functional requirement, is it a derived requirement, etc)
+For "test methodology" you should choose on of these parameters ( “Test”, “Analysis”, “Demonstration”, “Inspection”)
+your result has to be a list of dictionaries and don't show any extra thing in the result.
+
+
+example 1:
+  given text=
+    ```
+Chapter 5
+PAD SAFETY CONSOLE
+5.1. Pad Safety Console General Design Requirements.
+5.1.1. Each launch control center, blockhouse, and firing room, as applicable, shall provide
+for a Pad Safety Console (PSC). MIL-STD-1472, Human Engineering Design Criteria for
+Military Systems, Equipment, and Facilities, shall be used as appropriate in designing the PSC.
+Note: The term ‘Pad Safety Console’ has also been known in the past as ‘Operations Safety
+Console’; the terms shall be considered interchangeable.
+5.1.2. The Range User (normally the launch vehicle provider) shall provide an ER/WR PSC
+unless otherwise agreed to by Range Safety. Range Safety shall approve the design, operation,
+and maintenance of the PSC.
+5.1.3. The Range User shall provide ample and satisfactory space to install and operate the
+console.
+5.1.4. No SFP components shall be in the ground support equipment (GSE) or firing
+room/launch control center/blockhouse system that will cause the loss of a safety critical
+system control or monitor (as determined by Range Safety) at the PSC
+    ```
+result=
+```
+{
+    "section": "5.1",
+    "spec": {
+        "name": "Pad Safety Console General Requirements",
+        "requirements": [
+            {
+                "id": "5.1.1",
+                "shall": "Each launch control center, blockhouse, and firing room, as applicable, shall provide for a Pad Safety Console (PSC).",
+                "attributes": [
+                    { "name": "type", "value": "safety" },
+                    { "name": "test methodology", "value": "inspection" }
+                ]
+            },
+            {
+                "id": "5.1.2",
+                "shall": "Range User and Range Safety approvals",
+                "child": { "ids": ["5.1.2.1", "5.1.2.2"] },
+                "attributes": [
+                    { "name": "type", "value": "safety" },
+                    { "name": "test methodology", "value": "inspection" }
+                ]
+            },
+            {
+                "id": "5.1.2.1",
+                "shall": "The Range User (normally the launch vehicle provider) shall provide an ER/WR PSC unless otherwise agreed to by Range Safety."
+            },
+            {
+                "id": "5.1.2.2",
+                "shall": "Range Safety shall approve the design, operation, and maintenance of the PSC."
+            },
+            {
+                "id": "5.1.3",
+                "shall": "The Range User shall provide ample and satisfactory space to install and operate the console."
+            },
+            {
+                "id": "5.1.4",
+                "shall": "No SFP components shall be in the ground support equipment (GSE) or firing room/launch control center/blockhouse system that will cause the loss of a safety critical system control or monitor (as determined by Range Safety) at the PSC."
+            }
+        ]
+    }
+}
+
+
+```
+
+I will give just one page in each session and might the section is more than one page if you see middle of section just return requirement like bellow
+
+example 2:
+  given text=
+  ```
+5.2. Pad Safety Console Controls, Monitors, and Communication Lines.
+5.2.1. The PSC shall be in a dedicated position to provide the Pad Safety Supervisor/Pad
+Safety Officer sufficient information and communications capability to convey safety status
+and conditions to the appropriate authority (e.g., the launch complex control authority for day-
+to-day operations and the Mission Flight Control Officer [MFCO] during a launch operation).
+5.2.2. At a minimum, the controls, monitors, and communication lines listed below are
+required at the launch complex PSC. These items are general in nature and may vary depending
+on the launch facility and/or launch vehicle configuration. The monitor circuit shall be
+designed so that the actual status of the critical parameters can be monitored rather than the
+command transmittal. It is important that this console does not have any flight termination
+system (FTS) command transmittal functions.
+5.2.2.1. FTS safe and arm status for all FTS safe and arm devices.
+5.2.2.2. Ignition safe and arm status for all solid rocket motor safe and arm devices.
+5.2.2.3. An enable control switch and status for all solid rocket motor arming devices.
+5.2.2.4. Launch vehicle liquid propulsion system inhibits and propellant tank pressure
+status (psig).
+5.2.2.5. Fire suppression system status.
+5.2.2.6. Launch complex warning beacon and horn control switch and status.
+5.2.2.7. Emergency and normal electrical power status for critical locations.
+5.2.2.8. Wind speed and direction readouts.
+5.2.2.9. Communications Control Panel.
+SSCMAN91-710V3 27 DECEMBER 2022 15
+5.2.2.9.1. At least one Class A dial line.
+5.2.2.9.2. Audio-selector push buttons for intercom net and direct lines in which four
+channels can be accessed simultaneously.
+5.2.2.9.3. Direct line to the MFCO.
+5.2.2.9.4. Direct line to the Range Safety representative.
+5.2.2.9.5. Direct lines to Test Conductor and Launch Control Officer.
+5.2.2.9.6. Direct line to primary access control point for safety control areas.
+5.2.2.9.7. Direct line to facility safety net.
+5.2.2.9.8. Direct line to Launch Support Team Chief and fallback area.
+5.2.2.9.9. Access to facility public address (PA) system with emergency override
+capability.
+
+  ```
+result =
+```
+ {
+  "section": "5.2",
+  "spec": {
+    "name": "Pad Safety Console Controls, Monitors, and Communication Lines",
+    "description": "Requirements for the PSC Controls, Monitors, and Communication Lines.",
+    "requirements": [
+      {
+        "id": "5.2.1",
+        "shall": "The PSC shall be in a dedicated position to provide the Pad Safety Supervisor/Pad Safety Officer sufficient information and communications capability to convey safety status and conditions to the appropriate authority (e.g., the launch complex control authority for day-to-day operations and the Mission Flight Control Officer [MFCO] during a launch operation)."
+      },
+      {
+        "id": "5.2.2",
+        "shall": "The minimum controls, monitors and communication lines required at the launch complex PSC. These items are general in nature and may vary depending on the launch facility and/or launch vehicle configuration. The monitor circuit shall be designed so that the actual status of the critical parameters can be monitored rather than the command transmittal. It is important that this console does not have any flight termination system (FTS) command transmittal functions.",
+        "child": { "ids": ["5.2.2.1", "5.2.2.2", "5.2.2.3", "5.2.2.4", "5.2.2.5", "5.2.2.6", "5.2.2.7", "5.2.2.8", "5.2.2.9", "5.2.2.10", "5.2.2.11", "5.2.2.12", "5.2.2.13"] }
+      },
+      {
+        "id": "5.2.2.1",
+        "shall": "The FTS safe and arm status for all FTS safe and arm devices shall be at the launch complex PSC."
+      },
+      {
+        "id": "5.2.2.2",
+        "shall": "The ignition safe and arm status for all solid rocket motor safe and arm devices shall be at the launch complex PSC."
+      },
+      {
+        "id": "5.2.2.3",
+        "shall": "An enable control switch and status for all solid rocket motor arming devices shall be at the launch complex PSC."
+      },
+      {
+        "id": "5.2.2.4",
+        "shall": "The launch vehicle liquid propulsion system inhibits and propellant tank pressure status (psig) shall be at the launch complex PSC."
+      },
+      {
+        "id": "5.2.2.5",
+        "shall": "The fire suppression system status shall be at the launch complex PSC."
+      },
+      {
+        "id": "5.2.2.6",
+        "shall": "The launch complex warning beacon and horn control switch and status shall be at the launch complex PSC."
+      },
+      {
+        "id": "5.2.2.7",
+        "shall": "The emergency and normal electrical power status for critical locations shall be at the launch complex PSC."
+      },
+      {
+        "id": "5.2.2.8",
+        "shall": "The wind speed and direction readouts shall be at the launch complex PSC."
+      },
+      {
+        "id": "5.2.2.9",
+        "shall": "The Communications Control Panel shall be at the launch complex PSC.",
+        "child": { "ids": ["5.2.2.9.1", "5.2.2.9.2", "5.2.2.9.3", "5.2.2.9.4", "5.2.2.9.5", "5.2.2.9.6", "5.2.2.9.7", "5.2.2.9.8", "5.2.2.9.9", "5.2.2.9.10", "5.2.2.9.11", "5.2.2.9.12", "5.2.2.9.13"] }
+      },
+      {
+        "id": "5.2.2.9.1",
+        "shall": "The Communications Control Panel shall have at least one Class A dial line."
+      },
+      {
+        "id": "5.2.2.9.2",
+        "shall": "The Communications Control Panel shall have audio-selector push buttons for intercom net and direct lines in which four channels can be accessed simultaneously."
+      },
+      {
+        "id": "5.2.2.9.3",
+        "shall": "The Communications Control Panel shall have a direct line to the MFCO."
+      },
+      {
+        "id": "5.2.2.9.4",
+        "shall": "The Communications Control Panel shall have a direct line to the Range Safety representative."
+      },
+      {
+        "id": "5.2.2.9.5",
+        "shall": "The Communications Control Panel shall have direct lines to Test Conductor and Launch Control Officer."
+      }
+    ]
+  }
+}
+```
+ put created dictionaries  into a list like
+```
+[
+  {},
+  {},
+]
+```
